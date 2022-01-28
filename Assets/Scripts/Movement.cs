@@ -5,8 +5,8 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [SerializeField] private Vector2 startingPoint;
-    [SerializeField] private bool grounded;
     [SerializeField] private float gravity, speed;
+    public bool grounded;
     private Vector2 movement;
     
     // Start is called before the first frame update
@@ -18,25 +18,28 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Fire1") && grounded)
-            {
-            Jump();
-            }
-        if (!grounded)
-        {
-            movement.y -= gravity * Time.deltaTime;
-        }
+        //Inputs
+        inputs();
+
+        //Gravity
+        if (!grounded) movement.y -= gravity * Time.deltaTime; else movement.y = 0;
+
+        //Move
         transform.Translate(movement * speed * Time.deltaTime);
+        grounded = false;
     }
     void Jump()
     {
+        
+    }
 
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
+    void inputs()
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (Input.GetButton("Fire1") && grounded)
         {
-            grounded = true;
+            Jump();
         }
+        movement.x = Input.GetAxisRaw("Horizontal") * speed;
     }
+
 }
