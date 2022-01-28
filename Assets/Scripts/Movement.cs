@@ -6,11 +6,12 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] private Vector2 startingPoint;
     [SerializeField] private bool grounded;
-    private Rigidbody2D rb;
+    [SerializeField] private float gravity, speed;
+    private Vector2 movement;
+    
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         transform.position = startingPoint;
     }
 
@@ -21,6 +22,11 @@ public class Movement : MonoBehaviour
             {
             Jump();
             }
+        if (!grounded)
+        {
+            movement.y -= gravity * Time.deltaTime;
+        }
+        transform.Translate(movement * speed * Time.deltaTime);
     }
     void Jump()
     {
