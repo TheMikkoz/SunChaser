@@ -7,7 +7,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private Vector2 startingPoint;
     [SerializeField] private float gravity, speed;
     public bool grounded;
-    private Vector2 movement;
+    [SerializeField]private Vector2 movement;
     
     // Start is called before the first frame update
     void Start()
@@ -30,14 +30,14 @@ public class Movement : MonoBehaviour
     }
     void Jump()
     {
-        
     }
 
     void inputs()
     {
-        if (Input.GetButton("Fire1") && grounded)
+        if (Input.GetAxisRaw("Vertical") > 0 && grounded)
         {
-            Jump();
+            movement.y = speed * 1.5f;
+            grounded = false;
         }
         movement.x = Input.GetAxisRaw("Horizontal") * speed;
     }
