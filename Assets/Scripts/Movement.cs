@@ -10,17 +10,20 @@ public class Movement : MonoBehaviour
     public bool grounded;
     private Vector2 movement;
     [SerializeField] LayerMask groundlayer;
+    [SerializeField, Header("Manager")] GameObject Manager;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         transform.position = startingPoint;
     }
+    
 
     //To another lvl??
     void Door()
     {
-        SceneManager.LoadSceneAsync("empty");
+        Manager.GetComponent<Manager>().Door();
+        //SceneManager.LoadSceneAsync("empty");
     }
 
     //Raycast check collision
@@ -44,12 +47,13 @@ public class Movement : MonoBehaviour
     void Inputs()
     {
         //Raycast Rays
-        RaycastHit2D Down1 = Physics2D.Raycast(new Vector2(transform.position.x - transform.localScale.x / 2, transform.position.y), Vector2.down, transform.localScale.y / 2, groundlayer);
-        RaycastHit2D Down2 = Physics2D.Raycast(new Vector2(transform.position.x + transform.localScale.x / 2, transform.position.y), Vector2.down, transform.localScale.y / 2, groundlayer);
+        RaycastHit2D Down1 = Physics2D.Raycast(new Vector2(transform.position.x - transform.localScale.x / 2 + 0.1f, transform.position.y), Vector2.down, transform.localScale.y / 2, groundlayer);
+        RaycastHit2D Down2 = Physics2D.Raycast(new Vector2(transform.position.x + transform.localScale.x / 2 - 0.1f, transform.position.y), Vector2.down, transform.localScale.y / 2, groundlayer);
         RaycastHit2D Right1 = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - transform.localScale.y / 2 + 0.1f), Vector2.right, transform.localScale.x / 2, groundlayer);
         RaycastHit2D Right2 = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + transform.localScale.y / 2 - 0.1f), Vector2.right, transform.localScale.x / 2, groundlayer);
         RaycastHit2D Left1 = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - transform.localScale.y / 2 + 0.1f), Vector2.left, transform.localScale.x / 2, groundlayer);
         RaycastHit2D Left2 = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + transform.localScale.y / 2 - 0.1f), Vector2.left, transform.localScale.x / 2, groundlayer);
+        
 
         //Ground Check
         if(!Check(Down1) || !Check(Down2)) 
@@ -59,6 +63,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
+            grounded = false;
             movement.y -= gravity * Time.deltaTime;
         }
 
@@ -92,11 +97,22 @@ public class Movement : MonoBehaviour
         }
     }
 
+    void Defeat()
+    {
+        if (movement.y < -10)
+        {
+            movement.y = 0;
+            transform.position = startingPoint;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         //Inputs
         Inputs();
+
+        Defeat();
 
         //Move
         transform.Translate(movement * speed * Time.deltaTime);
