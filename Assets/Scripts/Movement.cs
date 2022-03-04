@@ -1,60 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
     [SerializeField] private Vector2 startingPoint;
     [SerializeField] private float gravity, speed;
     public bool grounded;
-    [SerializeField]private Vector2 movement;
-    [SerializeField]
-    LayerMask groundlayer;
+    private Vector2 movement;
+    [SerializeField] LayerMask groundlayer;
+    [SerializeField, Header("Manager")] GameObject Manager;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         transform.position = startingPoint;
     }
+    
 
+    //To another lvl??
+    void Door()
+    {
+        Manager.GetComponent<Manager>().Door();
+        //SceneManager.LoadSceneAsync("empty");
+    }
+
+    //Raycast check collision
     bool Check(RaycastHit2D hit2D)
     {
         if (hit2D.collider != null)
         {
+            if (hit2D.collider.tag == "Door")
+            {
+                Door();
+            }
             if (hit2D.collider.tag == "Ground")
             {
                 return false;
             }
-            else
-            {
-                return true;
-            }
         }
-        else
-        {
-            return true;
-        }
-
+        return true;
     }
 
 
     void Inputs()
     {
-
-        //raycast
-        RaycastHit2D Down1 = Physics2D.Raycast(new Vector2(transform.position.x - transform.localScale.x / 2, transform.position.y), Vector2.down, transform.localScale.y / 2, groundlayer);
-        RaycastHit2D Down2 = Physics2D.Raycast(new Vector2(transform.position.x + transform.localScale.x / 2, transform.position.y), Vector2.down, transform.localScale.y / 2, groundlayer);
+        //Raycast Rays
+        RaycastHit2D Down1 = Physics2D.Raycast(new Vector2(transform.position.x - transform.localScale.x / 2 + 0.1f, transform.position.y), Vector2.down, transform.localScale.y / 2, groundlayer);
+        RaycastHit2D Down2 = Physics2D.Raycast(new Vector2(transform.position.x + transform.localScale.x / 2 - 0.1f, transform.position.y), Vector2.down, transform.localScale.y / 2, groundlayer);
         RaycastHit2D Right1 = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - transform.localScale.y / 2 + 0.1f), Vector2.right, transform.localScale.x / 2, groundlayer);
         RaycastHit2D Right2 = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + transform.localScale.y / 2 - 0.1f), Vector2.right, transform.localScale.x / 2, groundlayer);
         RaycastHit2D Left1 = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - transform.localScale.y / 2 + 0.1f), Vector2.left, transform.localScale.x / 2, groundlayer);
         RaycastHit2D Left2 = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + transform.localScale.y / 2 - 0.1f), Vector2.left, transform.localScale.x / 2, groundlayer);
-
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + transform.localScale.y / 2), Vector2.left, Color.red);
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - transform.localScale.y / 2), Vector2.left, Color.red);
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + transform.localScale.y / 2), Vector2.right, Color.blue);
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - transform.localScale.y / 2), Vector2.right, Color.blue);
-
-        print(Down1.collider + " - " + Down2.collider + " - " + Right1.collider + " - " + Right2.collider + " - " + Left1.collider + " - " + Left2.collider);
+        
 
         //Ground Check
         if(!Check(Down1) || !Check(Down2)) 
@@ -64,11 +63,15 @@ public class Movement : MonoBehaviour
         }
         else
         {
+            grounded = false;
             movement.y -= gravity * Time.deltaTime;
         }
 
+        //Horizontal movement reset
         movement.x = 0;
 
+
+        //Right side Check
         if (Check(Right1) && Check(Right2))
         {
             if (Input.GetAxisRaw("Horizontal") > 0)
@@ -76,7 +79,8 @@ public class Movement : MonoBehaviour
                 movement.x = speed;
             }
         }
-
+        
+        //Left side Check
         if (Check(Left1) && Check(Left2))
         {
             if (Input.GetAxisRaw("Horizontal") < 0)
@@ -85,10 +89,20 @@ public class Movement : MonoBehaviour
             }
         }
 
+        //Jump
         if (Input.GetAxisRaw("Vertical") > 0 && grounded)
         {
             movement.y = speed * 1.5f;
             grounded = false;
+        }
+    }
+
+    void Defeat()
+    {
+        if (movement.y < -10)
+        {
+            movement.y = 0;
+            transform.position = startingPoint;
         }
     }
 
@@ -98,13 +112,9 @@ public class Movement : MonoBehaviour
         //Inputs
         Inputs();
 
-        
-
-        //Old Gravity
-        //if (!grounded) movement.y -= gravity * Time.deltaTime; else movement.y = 0;
+        Defeat();
 
         //Move
         transform.Translate(movement * speed * Time.deltaTime);
-
     }
 }
