@@ -29,6 +29,7 @@ public class Movement : MonoBehaviour
     //Raycast check collision
     bool Check(RaycastHit2D hit2D)
     {
+        
         if (hit2D.collider != null)
         {
             if (hit2D.collider.tag == "Door")
@@ -37,6 +38,11 @@ public class Movement : MonoBehaviour
             }
             if (hit2D.collider.tag == "Ground")
             {
+                return false;
+            }
+            if (hit2D.collider.tag == "Platform")
+            {
+                transform.parent = hit2D.transform;
                 return false;
             }
         }
@@ -53,7 +59,10 @@ public class Movement : MonoBehaviour
         RaycastHit2D Right2 = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + transform.localScale.y / 2 - 0.1f), Vector2.right, transform.localScale.x / 2, groundlayer);
         RaycastHit2D Left1 = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - transform.localScale.y / 2 + 0.1f), Vector2.left, transform.localScale.x / 2, groundlayer);
         RaycastHit2D Left2 = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + transform.localScale.y / 2 - 0.1f), Vector2.left, transform.localScale.x / 2, groundlayer);
+
         
+        //Horizontal movement reset
+        movement.x = 0;
 
         //Ground Check
         if(!Check(Down1) || !Check(Down2)) 
@@ -63,13 +72,10 @@ public class Movement : MonoBehaviour
         }
         else
         {
+            transform.parent = null;
             grounded = false;
             movement.y -= gravity * Time.deltaTime;
         }
-
-        //Horizontal movement reset
-        movement.x = 0;
-
 
         //Right side Check
         if (Check(Right1) && Check(Right2))

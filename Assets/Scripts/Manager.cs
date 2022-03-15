@@ -41,6 +41,5 @@ public class Manager : MonoBehaviour
 
             Player.GetComponent<SpriteRenderer>().enabled = true;
             Player.GetComponent<Movement>().enabled = true;
-        
     }
 }
