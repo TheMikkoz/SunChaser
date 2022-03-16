@@ -29,7 +29,6 @@ public class Movement : MonoBehaviour
     //Raycast check collision
     bool Check(RaycastHit2D hit2D)
     {
-        
         if (hit2D.collider != null)
         {
             if (hit2D.collider.tag == "Door")
