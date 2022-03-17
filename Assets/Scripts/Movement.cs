@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private Vector2 startingPoint;
+    public Vector2 startingPoint;
     [SerializeField] private float gravity, speed;
     public bool grounded;
     private Vector2 movement;
