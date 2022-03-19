@@ -1,34 +1,34 @@
 fileFormatVersion: 2
-guid: a90f1019486064847890c8d91d62fb47
+guid: 210f80c71fae40c4c9047848cc3470c4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8055494855071940796
-    second: Building_Tileset_Packed_0
+      213: -5543825596394764796
+    second: Building_Tileset_LightPurple_Packed_0
   - first:
-      213: -301674945696061355
-    second: Building_Tileset_Packed_1
+      213: -6221023516740792007
+    second: Building_Tileset_LightPurple_Packed_1
   - first:
-      213: 4659212928160802087
-    second: Building_Tileset_Packed_2
+      213: -5118154063686985806
+    second: Building_Tileset_LightPurple_Packed_2
   - first:
-      213: -2840741596587339130
-    second: Building_Tileset_Packed_3
+      213: 6750942305324429773
+    second: Building_Tileset_LightPurple_Packed_3
   - first:
-      213: 1374838184640621619
-    second: Building_Tileset_Packed_4
+      213: -6209405925626770036
+    second: Building_Tileset_LightPurple_Packed_4
   - first:
-      213: 5460401799841957740
-    second: Building_Tileset_Packed_5
+      213: -1454321411321320925
+    second: Building_Tileset_LightPurple_Packed_5
   - first:
-      213: -2045853409483229309
-    second: Building_Tileset_Packed_6
+      213: 1209265395646685803
+    second: Building_Tileset_LightPurple_Packed_6
   - first:
-      213: 3052502107664045572
-    second: Building_Tileset_Packed_7
+      213: -5400146451736444717
+    second: Building_Tileset_LightPurple_Packed_7
   - first:
-      213: -1422609075504589226
-    second: Building_Tileset_Packed_8
+      213: -4679962304844294157
+    second: Building_Tileset_LightPurple_Packed_8
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -130,7 +130,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Building_Tileset_Packed_0
+      name: Building_Tileset_LightPurple_Packed_0
       rect:
         serializedVersion: 2
         x: 0
@@ -144,14 +144,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cb0cc8e04eddacf60800000000000000
-      internalID: 8055494855071940796
+      spriteID: 4060c261eff5013b0800000000000000
+      internalID: -5543825596394764796
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Building_Tileset_Packed_1
+      name: Building_Tileset_LightPurple_Packed_1
       rect:
         serializedVersion: 2
         x: 16
@@ -165,14 +165,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 558a6283c3c30dbf0800000000000000
-      internalID: -301674945696061355
+      spriteID: 9315059621c7aa9a0800000000000000
+      internalID: -6221023516740792007
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Building_Tileset_Packed_2
+      name: Building_Tileset_LightPurple_Packed_2
       rect:
         serializedVersion: 2
         x: 32
@@ -186,14 +186,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 725aeebf879d8a040800000000000000
-      internalID: 4659212928160802087
+      spriteID: 2b717380ff9a8f8b0800000000000000
+      internalID: -5118154063686985806
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Building_Tileset_Packed_3
+      name: Building_Tileset_LightPurple_Packed_3
       rect:
         serializedVersion: 2
         x: 0
@@ -207,14 +207,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6825cbc9198a398d0800000000000000
-      internalID: -2840741596587339130
+      spriteID: dc1f408324a20bd50800000000000000
+      internalID: 6750942305324429773
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Building_Tileset_Packed_4
+      name: Building_Tileset_LightPurple_Packed_4
       rect:
         serializedVersion: 2
         x: 16
@@ -228,14 +228,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33ca5237b08641310800000000000000
-      internalID: 1374838184640621619
+      spriteID: c8d8fc0a532c3d9a0800000000000000
+      internalID: -6209405925626770036
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Building_Tileset_Packed_5
+      name: Building_Tileset_LightPurple_Packed_5
       rect:
         serializedVersion: 2
         x: 32
@@ -249,14 +249,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c67cb7aa18e37cb40800000000000000
-      internalID: 5460401799841957740
+      spriteID: 32aa2f8b16631dbe0800000000000000
+      internalID: -1454321411321320925
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Building_Tileset_Packed_6
+      name: Building_Tileset_LightPurple_Packed_6
       rect:
         serializedVersion: 2
         x: 0
@@ -270,14 +270,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 387fa39d92bab93e0800000000000000
-      internalID: -2045853409483229309
+      spriteID: b6261ba687c28c010800000000000000
+      internalID: 1209265395646685803
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Building_Tileset_Packed_7
+      name: Building_Tileset_LightPurple_Packed_7
       rect:
         serializedVersion: 2
         x: 16
@@ -291,14 +291,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 406527b7e7aac5a20800000000000000
-      internalID: 3052502107664045572
+      spriteID: 3d0c921d963de05b0800000000000000
+      internalID: -5400146451736444717
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Building_Tileset_Packed_8
+      name: Building_Tileset_LightPurple_Packed_8
       rect:
         serializedVersion: 2
         x: 32
@@ -312,8 +312,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6565d484590e14ce0800000000000000
-      internalID: -1422609075504589226
+      spriteID: 3f79989441f6d0fb0800000000000000
+      internalID: -4679962304844294157
       vertices: []
       indices: 
       edges: []
