@@ -85,10 +85,15 @@ public class Movement : MonoBehaviour
             if (Input.GetAxisRaw("Horizontal") > 0)
             {
                 movement.x = speed;
-                plr.SetBool("Run", true);
+                if (plr.GetBool("Idle"))
+                {
+                    plr.SetBool("Run", true);
+                    plr.SetBool("Idle", false);
+                    plr.SetBool("Jump", false);
+                }
+                
                 GetComponent<SpriteRenderer>().flipX = false;
-                plr.SetBool("Idle", false);
-                plr.SetBool("Jump", false);
+                
             }
         }
 
@@ -97,10 +102,15 @@ public class Movement : MonoBehaviour
             if (Input.GetAxisRaw("Horizontal") < 0)
             {
                 movement.x = -speed;
-                plr.SetBool("Run", true);
+                
                 GetComponent<SpriteRenderer>().flipX=true;
-                plr.SetBool("Idle", false);
-                plr.SetBool("Jump", false);
+                
+                if (plr.GetBool("Idle"))
+                {
+                    plr.SetBool("Run", true);
+                    plr.SetBool("Idle", false);
+                    plr.SetBool("Jump", false);
+                }
             }
         }
 
