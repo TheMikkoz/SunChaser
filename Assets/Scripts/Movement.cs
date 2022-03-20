@@ -8,53 +8,62 @@ public class Movement : MonoBehaviour
     public Vector2 startingPoint;
     [SerializeField] private float gravity, speed;
     public bool grounded;
-    [SerializeField]private Vector2 movement;
-    [SerializeField]
-    LayerMask groundlayer;
+    private Vector2 movement;
+    [SerializeField] LayerMask groundlayer;
+    [SerializeField, Header("Manager")] GameObject Manager;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        plr = GetComponent<Animator>();
+        plr = GetComponentInChildren<Animator>();
         transform.position = startingPoint;
     }
 
+
+    //To another lvl??
+    void Door()
+    {
+        Manager.GetComponent<Manager>().Door();
+        //SceneManager.LoadSceneAsync("empty");
+    }
+
+    //Raycast check collision
     bool Check(RaycastHit2D hit2D)
     {
         if (hit2D.collider != null)
         {
+            if (hit2D.collider.tag == "Door")
+            {
+                Door();
+            }
             if (hit2D.collider.tag == "Ground")
             {
                 return false;
             }
-            else
+            if (hit2D.collider.tag == "Platform")
             {
-                return true;
+                transform.parent = hit2D.transform;
+                return false;
             }
         }
-        else
-        {
-            return true;
-        }
-
+        return true;
     }
-
 
     void Inputs()
     {
 
-        //raycast
-        RaycastHit2D Down1 = Physics2D.Raycast(new Vector2(transform.position.x - transform.localScale.x / 2, transform.position.y), Vector2.down, transform.localScale.y / 2, groundlayer);
-        RaycastHit2D Down2 = Physics2D.Raycast(new Vector2(transform.position.x + transform.localScale.x / 2, transform.position.y), Vector2.down, transform.localScale.y / 2, groundlayer);
+        //Raycast Rays
+        RaycastHit2D Down1 = Physics2D.Raycast(new Vector2(transform.position.x - transform.localScale.x / 2 + 0.1f, transform.position.y), Vector2.down, transform.localScale.y / 2, groundlayer);
+        RaycastHit2D Down2 = Physics2D.Raycast(new Vector2(transform.position.x + transform.localScale.x / 2 - 0.1f, transform.position.y), Vector2.down, transform.localScale.y / 2, groundlayer);
         RaycastHit2D Right1 = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - transform.localScale.y / 2 + 0.1f), Vector2.right, transform.localScale.x / 2, groundlayer);
         RaycastHit2D Right2 = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + transform.localScale.y / 2 - 0.1f), Vector2.right, transform.localScale.x / 2, groundlayer);
         RaycastHit2D Left1 = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - transform.localScale.y / 2 + 0.1f), Vector2.left, transform.localScale.x / 2, groundlayer);
         RaycastHit2D Left2 = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + transform.localScale.y / 2 - 0.1f), Vector2.left, transform.localScale.x / 2, groundlayer);
 
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + transform.localScale.y / 2), Vector2.left, Color.red);
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - transform.localScale.y / 2), Vector2.left, Color.red);
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + transform.localScale.y / 2), Vector2.right, Color.blue);
-        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - transform.localScale.y / 2), Vector2.right, Color.blue);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + transform.localScale.y), Vector2.left, Color.red);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - transform.localScale.y), Vector2.left, Color.red);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + transform.localScale.y), Vector2.right, Color.blue);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - transform.localScale.y), Vector2.right, Color.blue);
 
         
         //Horizontal movement reset
@@ -85,15 +94,15 @@ public class Movement : MonoBehaviour
             if (Input.GetAxisRaw("Horizontal") > 0)
             {
                 movement.x = speed;
+
                 if (plr.GetBool("Idle"))
                 {
                     plr.SetBool("Run", true);
                     plr.SetBool("Idle", false);
                     plr.SetBool("Jump", false);
                 }
-                
-                GetComponent<SpriteRenderer>().flipX = false;
-                
+
+                GetComponentInChildren<SpriteRenderer>().flipX = false;
             }
         }
 
@@ -103,14 +112,14 @@ public class Movement : MonoBehaviour
             {
                 movement.x = -speed;
                 
-                GetComponent<SpriteRenderer>().flipX=true;
-                
                 if (plr.GetBool("Idle"))
                 {
                     plr.SetBool("Run", true);
                     plr.SetBool("Idle", false);
                     plr.SetBool("Jump", false);
                 }
+
+                GetComponentInChildren<SpriteRenderer>().flipX=true;
             }
         }
 
@@ -121,19 +130,25 @@ public class Movement : MonoBehaviour
         }
     }
 
+    void Defeat()
+    {
+        if (movement.y < -10)
+        {
+            movement.y = 0;
+            transform.position = startingPoint;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         //Inputs
         Inputs();
 
-        
-
-        //Old Gravity
-        //if (!grounded) movement.y -= gravity * Time.deltaTime; else movement.y = 0;
+        //Defeat
+        Defeat();
 
         //Move
         transform.Translate(movement * speed * Time.deltaTime);
-
     }
 }
