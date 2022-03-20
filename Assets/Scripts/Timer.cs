@@ -18,7 +18,7 @@ public class Timer : MonoBehaviour
     void Update()
     {
         dur -= Time.deltaTime;
-        timer.text = "Timer: " + Mathf.Round (dur*100)/100;
+        timer.text = "TIMER: " + Mathf.Round (dur*100)/100;
 
         if (dur <0)
         {
