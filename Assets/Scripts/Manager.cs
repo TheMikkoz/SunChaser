@@ -24,7 +24,7 @@ public class Manager : MonoBehaviour
     IEnumerator transition()
     {
         Player.GetComponent<Movement>().enabled = false;
-        Player.GetComponent<SpriteRenderer>().enabled = false;
+        Player.GetComponentInChildren<SpriteRenderer>().enabled = false;
         Vector2 pos = Player.transform.position;
         while (true)
         {
@@ -39,7 +39,7 @@ public class Manager : MonoBehaviour
             }
         }
 
-            Player.GetComponent<SpriteRenderer>().enabled = true;
-            Player.GetComponent<Movement>().enabled = true;
+        Player.GetComponentInChildren<SpriteRenderer>().enabled = true;
+        Player.GetComponent<Movement>().enabled = true;
     }
 }

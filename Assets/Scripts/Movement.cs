@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
+    private Animator plr;
     public Vector2 startingPoint;
     [SerializeField] private float gravity, speed;
     public bool grounded;
@@ -15,9 +15,10 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        plr = GetComponentInChildren<Animator>();
         transform.position = startingPoint;
     }
-    
+
 
     //To another lvl??
     void Door()
@@ -48,9 +49,9 @@ public class Movement : MonoBehaviour
         return true;
     }
 
-
     void Inputs()
     {
+
         //Raycast Rays
         RaycastHit2D Down1 = Physics2D.Raycast(new Vector2(transform.position.x - transform.localScale.x / 2 + 0.1f, transform.position.y), Vector2.down, transform.localScale.y / 2, groundlayer);
         RaycastHit2D Down2 = Physics2D.Raycast(new Vector2(transform.position.x + transform.localScale.x / 2 - 0.1f, transform.position.y), Vector2.down, transform.localScale.y / 2, groundlayer);
@@ -59,42 +60,69 @@ public class Movement : MonoBehaviour
         RaycastHit2D Left1 = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - transform.localScale.y / 2 + 0.1f), Vector2.left, transform.localScale.x / 2, groundlayer);
         RaycastHit2D Left2 = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + transform.localScale.y / 2 - 0.1f), Vector2.left, transform.localScale.x / 2, groundlayer);
 
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + transform.localScale.y), Vector2.left, Color.red);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - transform.localScale.y), Vector2.left, Color.red);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + transform.localScale.y), Vector2.right, Color.blue);
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y - transform.localScale.y), Vector2.right, Color.blue);
+
         
         //Horizontal movement reset
         movement.x = 0;
+        plr.SetBool("Run", false);
 
         //Ground Check
-        if(!Check(Down1) || !Check(Down2)) 
+        if (!Check(Down1) || !Check(Down2)) 
         {
+            plr.SetBool("Jump", false);
+            plr.SetBool("Idle", true);
             grounded = true;
             movement.y = 0;
         }
         else
         {
+            plr.SetBool("Jump",true);
+            plr.SetBool("Idle", false);
             transform.parent = null;
             grounded = false;
             movement.y -= gravity * Time.deltaTime;
         }
 
-        //Right side Check
+        movement.x = 0;
+
         if (Check(Right1) && Check(Right2))
         {
             if (Input.GetAxisRaw("Horizontal") > 0)
             {
                 movement.x = speed;
+
+                if (plr.GetBool("Idle"))
+                {
+                    plr.SetBool("Run", true);
+                    plr.SetBool("Idle", false);
+                    plr.SetBool("Jump", false);
+                }
+
+                GetComponentInChildren<SpriteRenderer>().flipX = false;
             }
         }
-        
-        //Left side Check
+
         if (Check(Left1) && Check(Left2))
         {
             if (Input.GetAxisRaw("Horizontal") < 0)
             {
                 movement.x = -speed;
+                
+                if (plr.GetBool("Idle"))
+                {
+                    plr.SetBool("Run", true);
+                    plr.SetBool("Idle", false);
+                    plr.SetBool("Jump", false);
+                }
+
+                GetComponentInChildren<SpriteRenderer>().flipX=true;
             }
         }
 
-        //Jump
         if (Input.GetAxisRaw("Vertical") > 0 && grounded)
         {
             movement.y = speed * 1.5f;
@@ -117,6 +145,7 @@ public class Movement : MonoBehaviour
         //Inputs
         Inputs();
 
+        //Defeat
         Defeat();
 
         //Move
