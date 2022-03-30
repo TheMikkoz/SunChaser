@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/empty.unity
     guid: 2e09ff61b5fca22419cb69cd4743ae96
+  - enabled: 1
+    path: Assets/Scenes/Title screen.unity
+    guid: b051ac5cde64f2a4ca4fd43265711510
+  - enabled: 1
+    path: Assets/Scenes/Eevi lvl Desing.unity
+    guid: ea58e5611ef76f643822b23015d6cc07
   m_configObjects: {}

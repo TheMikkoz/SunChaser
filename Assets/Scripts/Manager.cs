@@ -34,7 +34,7 @@ public class Manager : MonoBehaviour
             }
             else
             {
-                yield return new WaitForSeconds(0.1f/Height);
+                yield return new WaitForSeconds(0.001f/Height);
                 Player.transform.Translate(Vector2.up * Time.deltaTime * Height);
             }
         }
